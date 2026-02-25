@@ -1,0 +1,152 @@
+{
+  "name": "PHAM NGOC THIEM",
+  "title": "ARCHITECT",
+  "tagline": "6+ Years experience",
+  "contacts": [
+    {
+      "label": "Phone",
+      "value": "+84 \u2026",
+      "href": "tel:+84"
+    },
+    {
+      "label": "Email",
+      "value": "\u2026@gmail.com",
+      "href": "mailto:\u2026@gmail.com"
+    },
+    {
+      "label": "Location",
+      "value": "Ha Noi, Viet Nam",
+      "href": ""
+    }
+  ],
+  "summary": {
+    "vi": "Ki\u1ebfn tr\u00fac s\u01b0 v\u1edbi h\u01a1n 6 n\u0103m kinh nghi\u1ec7m ... (c\u1eadp nh\u1eadt theo CV PDF).",
+    "en": "Architect with over 6 years of experience ... (edit to match your PDF)."
+  },
+  "employment": [
+    {
+      "period": "2019 \u2013 2021 (Ha Noi)",
+      "role": "Internship \u2013 Drafting \u2013 Concept",
+      "company": "EBROS C&T VIETNAM Joint Stock Company",
+      "highlights": [
+        "Thi\u1ebft k\u1ebf v\u00e0 ph\u00e1t tri\u1ec3n \u00fd t\u01b0\u1edfng cho c\u00e1c d\u1ef1 \u00e1n quy m\u00f4 nh\u1ecf ...",
+        "Th\u1ef1c hi\u1ec7n b\u1ea3n v\u1ebd ki\u1ebfn tr\u00fac & n\u1ed9i th\u1ea5t, ph\u1ed1i h\u1ee3p team."
+      ]
+    },
+    {
+      "period": "2021 \u2013 2022 (Ha Noi)",
+      "role": "Conceptual Architect",
+      "company": "DLLC Urban Development and Architecture Design Consultant JSC",
+      "highlights": [
+        "Tham gia ph\u00e1t tri\u1ec3n concept d\u1ef1 \u00e1n ...",
+        "Chu\u1ea9n b\u1ecb h\u1ed3 s\u01a1 k\u1ef9 thu\u1eadt, ph\u1ed1i h\u1ee3p \u0111\u1ed1i t\u00e1c."
+      ]
+    },
+    {
+      "period": "2022 \u2013 Present (Ha Noi)",
+      "role": "Revit Specialist \u2013 BIM Coordinator \u2013 BIM Manager",
+      "company": "VietNam National Construction Consultants (VNCC) Consultant JSC",
+      "highlights": [
+        "\u0110i\u1ec1u ph\u1ed1i BIM, ki\u1ec3m so\u00e1t ch\u1ea5t l\u01b0\u1ee3ng model, BEP ...",
+        "\u0110\u00e0o t\u1ea1o n\u1ed9i b\u1ed9 Revit, c\u1ea3i ti\u1ebfn quy tr\u00ecnh."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "period": "2016 \u2013 2021 (Ha Noi)",
+      "school": "Ha Noi Architectural University",
+      "degree": "The degree of Architect"
+    }
+  ],
+  "courses": [
+    {
+      "period": "2023 (Ha Noi)",
+      "name": "BIM Coordinator Course",
+      "org": "Vecas \u2013 Autodesk",
+      "note": "BIM Coordinator Certificate"
+    },
+    {
+      "period": "2025 (Ha Noi)",
+      "name": "The Application of GIS in Construction Planning",
+      "org": "Vecas",
+      "note": "Certificate of Completion for GIS Course"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Autodesk Revit",
+      "level": "Expert",
+      "value": 0.92
+    },
+    {
+      "name": "Autodesk Naviswork",
+      "level": "Expert",
+      "value": 0.9
+    },
+    {
+      "name": "Autodesk AutoCAD",
+      "level": "Beginner",
+      "value": 0.35
+    },
+    {
+      "name": "SketchUp",
+      "level": "Beginner",
+      "value": 0.35
+    },
+    {
+      "name": "Lumion",
+      "level": "Skillful",
+      "value": 0.68
+    },
+    {
+      "name": "Adobe Photoshop",
+      "level": "Expert",
+      "value": 0.9
+    },
+    {
+      "name": "Adobe Illustrator",
+      "level": "Experienced",
+      "value": 0.78
+    },
+    {
+      "name": "Adobe InDesign",
+      "level": "Experienced",
+      "value": 0.78
+    },
+    {
+      "name": "Microsoft Power BI",
+      "level": "Experienced",
+      "value": 0.78
+    },
+    {
+      "name": "Microsoft Office",
+      "level": "Experienced",
+      "value": 0.78
+    }
+  ],
+  "projects": [
+    {
+      "name": "Long Thanh International Airport",
+      "role": "BIM Coordinator | BIM Manager",
+      "class": "Construction Class: Special",
+      "note": "Update exact text per PDF"
+    },
+    {
+      "name": "Viettel Tower Da Nang",
+      "role": "BIM Coordinator",
+      "class": "Construction Class: III",
+      "note": "Update exact text per PDF"
+    },
+    {
+      "name": "VTV5/VT-S1 Television Studio and Central Square",
+      "role": "BIM Coordinator",
+      "class": "Construction Class: II",
+      "note": "Update exact text per PDF"
+    }
+  ],
+  "pdf": {
+    "label": "Download PDF CV",
+    "file": "/cv.pdf"
+  }
+}
