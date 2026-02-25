@@ -1,131 +1,147 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import { AnimatePresence } from "framer-motion";
-import ProjectModal from "@/components/ProjectModal";
+import { useCallback, useEffect, useState } from "react";
 import { projects } from "@/data/projects";
+
+type EmblaApi = ReturnType<typeof useEmblaCarousel>[1];
+
+function clamp(n: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, n));
+}
+
+// khoảng cách vòng (loop) giữa 2 index (ví dụ 0 và cuối list)
+function circularDistance(i: number, j: number, n: number) {
+  const d = Math.abs(i - j);
+  return Math.min(d, n - d);
+}
 
 export default function ProjectCarousel() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "center",
     loop: true,
-    skipSnaps: false,
+    // để drag mượt và ít “giật”
+    dragFree: false,
+    containScroll: "trimSnaps",
   });
 
   const [selected, setSelected] = useState(0);
-  const [openId, setOpenId] = useState<string | null>(null);
+  const total = projects.length;
 
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return;
-    setSelected(emblaApi.selectedScrollSnap());
-  }, [emblaApi]);
+  const onSelect = useCallback((api: EmblaApi) => {
+    if (!api) return;
+    setSelected(api.selectedScrollSnap());
+  }, []);
 
   useEffect(() => {
     if (!emblaApi) return;
-    onSelect();
-    emblaApi.on("select", onSelect);
-    emblaApi.on("reInit", onSelect);
+    onSelect(emblaApi);
+    emblaApi.on("select", () => onSelect(emblaApi));
+    emblaApi.on("reInit", () => onSelect(emblaApi));
   }, [emblaApi, onSelect]);
 
   const prev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const next = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
-  const openProject = (id: string) => setOpenId(id);
-
-  const activeProject = useMemo(
-    () => projects.find((p) => p.id === openId) || null,
-    [openId]
-  );
-
   return (
-    <div className="relative">
-      {/* Controls */}
-      <div className="absolute -top-12 right-0 flex items-center gap-2">
-        <button
-          onClick={prev}
-          aria-label="Previous"
-          className="h-9 w-9 rounded-full border border-[color:var(--line)] bg-black/20 text-white hover:bg-white/5 transition"
-        >
-          ‹
-        </button>
-        <button
-          onClick={next}
-          aria-label="Next"
-          className="h-9 w-9 rounded-full border border-[color:var(--line)] bg-black/20 text-white hover:bg-white/5 transition"
-        >
-          ›
-        </button>
+    <section className="relative mt-10">
+      {/* Header row */}
+      <div className="flex items-center justify-between">
+        <div>
+          <div className="text-white font-semibold">
+            Dự án tiêu biểu{" "}
+            <span className="text-[color:var(--accent)]">Featured Projects</span>
+          </div>
+          <div className="mt-1 text-xs text-white/60">
+            Vuốt ngang (mobile) • Max 4 visible (desktop)
+          </div>
+        </div>
+
+        {/* Buttons */}
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={prev}
+            className="h-10 w-10 rounded-full border border-white/20 text-white hover:bg-white/10 transition"
+            aria-label="Previous"
+          >
+            ‹
+          </button>
+          <button
+            type="button"
+            onClick={next}
+            className="h-10 w-10 rounded-full border border-white/20 text-white hover:bg-white/10 transition"
+            aria-label="Next"
+          >
+            ›
+          </button>
+        </div>
       </div>
 
       {/* Carousel */}
-      <div className="overflow-hidden" ref={emblaRef}>
+      <div className="mt-6 overflow-hidden" ref={emblaRef}>
         <div className="flex">
-          {projects.map((p, i) => {
-            const isSelected = i === selected;
+          {projects.map((p, idx) => {
+            const dist = circularDistance(idx, selected, total); // 0 là slide giữa
+            // mờ/nhỏ dần theo dist (0..3)
+            const opacity = dist === 0 ? 1 : dist === 1 ? 0.55 : dist === 2 ? 0.35 : 0.22;
+            const scale = dist === 0 ? 1 : dist === 1 ? 0.94 : dist === 2 ? 0.9 : 0.86;
+
             return (
               <div
                 key={p.id}
-                className={[
-                  "embla__slide",
-                  isSelected ? "is-selected" : "",
-                  "px-3",
-                  "flex-[0_0_78%]",
-                  "sm:flex-[0_0_52%]",
-                  "lg:flex-[0_0_25%]",
-                ].join(" ")}
+                className="embla-slide flex-[0_0_78%] sm:flex-[0_0_55%] md:flex-[0_0_25%] px-3 md:px-4"
+                style={{
+                  opacity,
+                  transform: `scale(${scale})`,
+                  willChange: "transform, opacity",
+                  transition: "transform 450ms cubic-bezier(0.22,1,0.36,1), opacity 450ms cubic-bezier(0.22,1,0.36,1)",
+                }}
               >
-                <button
-                  onClick={() => openProject(p.id)}
-                  className="group w-full text-left"
-                >
-                  <div className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-[color:var(--line)] bg-[color:var(--card)]">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={p.images?.[0] || ""}
-                      alt={p.titleEN}
-                      className="h-full w-full object-cover opacity-90 transition duration-500 group-hover:opacity-100"
-                      style={{ willChange: "transform, opacity" }}
-                    />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-black/0" />
+                <article className="group relative aspect-[3/4] overflow-hidden rounded-2xl bg-neutral-900 border border-white/10">
+                  {/* Image */}
+                  <img
+                    src={p.image}
+                    alt={p.titleVI}
+                    className="h-full w-full object-cover opacity-85 transition duration-500 group-hover:opacity-100"
+                    draggable={false}
+                  />
 
-                    <div className="absolute bottom-0 left-0 right-0 p-4">
-                      <div className="text-[11px] text-white/70">{p.period}</div>
-                      <div className="mt-1 text-sm font-semibold text-white line-clamp-1">
-                        {p.titleVI}
-                      </div>
-                      <div className="mt-0.5 text-xs text-[color:var(--accent)] line-clamp-1">
-                        {p.titleEN}
-                      </div>
-                      <div className="mt-2 text-xs text-white/75 line-clamp-1">
-                        {p.roleVI}
-                      </div>
-                      <div className="mt-0.5 text-[11px] text-[color:var(--accent)]/90 line-clamp-1">
-                        {p.roleEN}
-                      </div>
+                  {/* Overlay gradient for text legibility */}
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/80 to-transparent" />
 
-                      <div className="mt-3 flex items-center justify-between">
-                        <div className="text-[11px] text-white/60">
-                          {p.locationVI}
-                        </div>
-                        <div className="text-[11px] text-[color:var(--accent)]">
-                          Chi tiết • Details →
-                        </div>
-                      </div>
+                  {/* Content */}
+                  <div className="absolute inset-x-0 bottom-0 p-4">
+                    <div className="text-xs text-white/60">{p.periodVI}</div>
+
+                    <div className="mt-1 text-sm font-semibold text-white line-clamp-2">
+                      {p.titleVI}
+                    </div>
+                    <div className="text-xs text-[color:var(--accent)] line-clamp-1">
+                      {p.titleEN}
+                    </div>
+
+                    <div className="mt-2 text-[11px] text-white/55 line-clamp-2">
+                      {p.roleVI}{" "}
+                      <span className="text-[color:var(--accent)]">{p.roleEN}</span>
+                    </div>
+
+                    <div className="mt-3 flex items-center justify-between text-[11px]">
+                      <span className="text-white/45">{p.locationVI}</span>
+                      <span className="text-[color:var(--accent)]/90">
+                        Chi tiết • Details →
+                      </span>
                     </div>
                   </div>
-                </button>
+
+                  {/* Hover upscale (nhẹ hơn center scale, chỉ thêm 1 chút) */}
+                  <div className="absolute inset-0 transition-transform duration-300 group-hover:scale-[1.03]" />
+                </article>
               </div>
             );
           })}
         </div>
       </div>
-
-      <AnimatePresence>
-        {activeProject && (
-          <ProjectModal project={activeProject} onClose={() => setOpenId(null)} />
-        )}
-      </AnimatePresence>
-    </div>
+    </section>
   );
 }
