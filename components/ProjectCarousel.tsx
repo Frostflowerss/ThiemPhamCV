@@ -40,76 +40,89 @@ export default function ProjectCarousel() {
       <div className="relative overflow-hidden rounded-3xl border border-[color:var(--line)] bg-black/20">
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex">
-            {projects.map((p) => (
-              <div key={p.id} className="flex-[0_0_100%]">
-                <button
-                  type="button"
-                  onClick={() => setActiveId(p.id)}
-                  className="relative block w-full text-left"
-                  aria-label={`Open ${p.titleEN}`}
-                >
-                  <div className="relative aspect-[16/9] bg-black">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={p.images[0]}
-                      alt={p.titleEN}
-                      className="h-full w-full object-cover"
-                      draggable={false}
-                    />
-                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black/80 to-transparent" />
+            {projects.map((p) => {
+              const cover = p.images?.[0] ?? "";
 
-                    <div className="absolute bottom-8 left-8 right-8">
-                      <div className="text-xs text-white/70">
-                        {p.periodVI}{" "}
-                        <span className="text-[color:var(--en)]">({p.periodEN})</span>
-                      </div>
-                      <div className="mt-2 text-xl md:text-2xl font-semibold text-white">
-                        {p.titleVI}
-                      </div>
-                      <div className="mt-1 text-sm text-[color:var(--en)]">
-                        {p.titleEN}
-                      </div>
-                      <div className="mt-2 text-xs text-white/65">
-                        {p.locationVI}{" "}
-                        <span className="text-[color:var(--en)]">({p.locationEN})</span>
-                      </div>
-                    </div>
-                  </div>
+              return (
+                <div key={p.id} className="flex-[0_0_100%]">
+                  <button
+                    type="button"
+                    onClick={() => setActiveId(p.id)}
+                    className="relative block w-full text-left"
+                    aria-label={`Open ${p.titleEN}`}
+                  >
+                    <div className="relative aspect-[16/9] bg-black">
+                      {cover ? (
+                        <img
+                          src={cover}
+                          alt={p.titleEN}
+                          className="h-full w-full object-cover"
+                          draggable={false}
+                        />
+                      ) : (
+                        <div className="h-full w-full bg-black" />
+                      )}
 
-                  {/* Side arrows */}
-                  <div className="pointer-events-none absolute inset-0 flex items-center justify-between px-4">
-                    <div className="pointer-events-auto">
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          prev();
-                        }}
-                        aria-label="Previous"
-                        className="h-11 w-11 rounded-full border border-white/15 bg-black/35 text-white hover:bg-white/10 transition"
-                      >
-                        ‹
-                      </button>
+                      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black/80 to-transparent" />
+
+                      <div className="absolute bottom-8 left-8 right-8">
+                        <div className="text-xs text-white/70">
+                          {p.period}
+                        </div>
+
+                        <div className="mt-2 text-xl md:text-2xl font-semibold text-white">
+                          {p.titleVI}
+                        </div>
+
+                        <div className="mt-1 text-sm text-[color:var(--en)]">
+                          {p.titleEN}
+                        </div>
+
+                        <div className="mt-2 text-xs text-white/65">
+                          {p.locationVI}
+                          {p.locationEN ? (
+                            <span className="text-[color:var(--en)]">
+                              {" "}
+                              ({p.locationEN})
+                            </span>
+                          ) : null}
+                        </div>
+                      </div>
                     </div>
-                    <div className="pointer-events-auto">
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          next();
-                        }}
-                        aria-label="Next"
-                        className="h-11 w-11 rounded-full border border-white/15 bg-black/35 text-white hover:bg-white/10 transition"
-                      >
-                        ›
-                      </button>
+
+                    {/* Arrows */}
+                    <div className="pointer-events-none absolute inset-0 flex items-center justify-between px-4">
+                      <div className="pointer-events-auto">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            prev();
+                          }}
+                          className="h-11 w-11 rounded-full border border-white/15 bg-black/35 text-white hover:bg-white/10 transition"
+                        >
+                          ‹
+                        </button>
+                      </div>
+                      <div className="pointer-events-auto">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            next();
+                          }}
+                          className="h-11 w-11 rounded-full border border-white/15 bg-black/35 text-white hover:bg-white/10 transition"
+                        >
+                          ›
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </button>
-              </div>
-            ))}
+                  </button>
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -131,16 +144,12 @@ export default function ProjectCarousel() {
 
       {/* Modal */}
       <AnimatePresence>
-        {activeProject ? (
-          <motion.div
-            key={activeProject.id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <ProjectModal project={activeProject} onClose={() => setActiveId(null)} />
-          </motion.div>
-        ) : null}
+        {activeProject && (
+          <ProjectModal
+            project={activeProject}
+            onClose={() => setActiveId(null)}
+          />
+        )}
       </AnimatePresence>
     </section>
   );
