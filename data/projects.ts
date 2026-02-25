@@ -1,4 +1,21 @@
-export const projects = [
+export type Project = {
+  id: string;
+  image: string;
+
+  periodVI: string;
+  periodEN: string;
+
+  titleVI: string;
+  titleEN: string;
+
+  roleVI: string;
+  roleEN: string;
+
+  locationVI: string;
+  locationEN: string;
+};
+
+export const projects: Project[] = [
   {
     id: "p1",
     image: "/projects/p1.jpg",
@@ -15,7 +32,6 @@ export const projects = [
     locationVI: "Đồng Nai",
     locationEN: "Dong Nai",
   },
-
   {
     id: "p2",
     image: "/projects/p2.jpg",
@@ -32,7 +48,6 @@ export const projects = [
     locationVI: "Đà Nẵng",
     locationEN: "Da Nang",
   },
-
   {
     id: "p3",
     image: "/projects/p3.jpg",
@@ -49,7 +64,6 @@ export const projects = [
     locationVI: "Hà Nội",
     locationEN: "Hanoi",
   },
-
   {
     id: "p4",
     image: "/projects/p4.jpg",
@@ -57,8 +71,8 @@ export const projects = [
     periodVI: "2021 – 2023",
     periodEN: "2021 – 2023",
 
-    titleVI: "Khu nghỉ dưỡng Vùng Lâm Phú Yên",
-    titleEN: "Lam Phu Resort Phu Yen",
+    titleVI: "Khu nghỉ dưỡng Lâm Phú Yên",
+    titleEN: "Lam Resort Phu Yen",
 
     roleVI: "Triển khai BIM",
     roleEN: "BIM Implementation",
@@ -66,7 +80,6 @@ export const projects = [
     locationVI: "Phú Yên",
     locationEN: "Phu Yen",
   },
-
   {
     id: "p5",
     image: "/projects/p5.jpg",
