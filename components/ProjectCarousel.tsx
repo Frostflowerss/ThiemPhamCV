@@ -51,7 +51,7 @@ export default function ProjectCarousel() {
                   <div className="relative aspect-[16/9] bg-black">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={Array.isArray(p.images) ? p.images[0] : p.image}
+                      src={p.images[0]}
                       alt={p.titleEN}
                       className="h-full w-full object-cover"
                       draggable={false}
