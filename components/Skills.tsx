@@ -27,18 +27,17 @@ function SkillBar({
 
       <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-white/10">
         <motion.div
-          className="h-full rounded-full"
-          style={{
-            background:
-              "linear-gradient(90deg, rgba(199,178,106,0.85), rgba(255,255,255,0.22))",
-            willChange: "transform",
-          }}
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: value / 100 }}
-          viewport={{ once: true, margin: "-120px" }}
-          transition={{ duration: 0.7, ease }}
-          transformOrigin="left"
-        />
+  className="..."
+  style={{
+    background: 'var(--accent)',
+    willChange: 'transform',
+    transformOrigin: 'left'
+  }}
+  initial={{ scaleX: 0 }}
+  whileInView={{ scaleX: level / 100 }}
+  viewport={{ once: true, margin: "-120px" }}
+  transition={{ duration: 0.7, ease }}
+/>
       </div>
     </div>
   );
