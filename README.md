@@ -21,3 +21,9 @@ npm run dev
 ## Replace data
 Edit: `data/projects.ts`
 Replace images in: `public/projects/*`
+
+
+## New Feature: Web Upload
+- Upload avatar directly from web interface
+- Upload CV PDF directly from web interface
+- Access admin page at /admin
