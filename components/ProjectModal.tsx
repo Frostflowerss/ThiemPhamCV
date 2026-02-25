@@ -2,7 +2,18 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
-import type { Project } from "@/data/projects";
+type Project = {
+  id: string;
+  image: string;
+  periodVI: string;
+  periodEN: string;
+  titleVI: string;
+  titleEN: string;
+  roleVI: string;
+  roleEN: string;
+  locationVI: string;
+  locationEN: string;
+};
 
 export default function ProjectModal({
   project,
